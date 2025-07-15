@@ -1,0 +1,18 @@
+[submodule "course_ifc_js"]
+	path = course_ifc_js
+	url = https://github.com/Santin04/course_ifc_js.git
+[submodule "course_java"]
+	path = course_java
+	url = https://github.com/Santin04/course_java.git
+[submodule "course_node_js"]
+	path = course_node_js
+	url = https://github.com/Santin04/course_node_js.git
+[submodule "course_react"]
+	path = course_react
+	url = https://github.com/Santin04/course_react.git
+[submodule "course_three_js_3D"]
+	path = course_three_js_3D
+	url = https://github.com/Santin04/course_three_js_3D.git
+[submodule "course_typescript"]
+	path = course_typescript
+	url = https://github.com/Santin04/course_typescript.git
