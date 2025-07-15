@@ -1,0 +1,28 @@
+Ao puxar uma lista de itens do banco de dados, você pode ordenar esse itens,
+aqui vai estar um exemplo de como você pode fazer isso:
+
+Primeiro você define o tipo da ordenação, tem dois tipos, sendo eles DESC e ASC
+
+- DESC = quando o campo é string ordena de Z-A, quando é númerica ordena de
+10, 9, 8..., quando o campo é data, ordena da data mais recente para a mais
+antiga
+
+- ASC = quando o campo é string ordena de A-Z, quando é númerica ordena de
+1, 2, 3..., quando o campo é data, ordena da data mais antiga para a mais
+recente
+
+você pode definir criando uma variavel é definir o valor com as strings 'DESC'
+ou 'ASC'
+
+let order = 'DESC'
+ou
+let order = 'ASC'
+
+Agora para usar a sua ordenação, basta colocar dessa forma:
+
+const toughtsData = await Tought.findAll({
+    where: { id: id },
+    order: [['createdAt', order]]
+})
+
+com isso os dados já vão ser puxados ordenados

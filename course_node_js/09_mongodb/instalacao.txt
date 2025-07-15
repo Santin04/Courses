@@ -1,0 +1,8 @@
+Para usar o mongodb, foi necessário instalar os seguintes arquivos:
+
+-Mongodb Shell
+-Mongodb Compass
+-Mongodb database tools
+
+Todos os arquivos são encontrados no site do mongodb, prontos para serem
+instalados na máquina

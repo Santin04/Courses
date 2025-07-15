@@ -1,0 +1,14 @@
+<h1>Adicione um usuário</h1>
+{{!-- criando formulário para o usário preencher e enviar os dados para o banco de dados --}}
+<form action="/users/create" method="post">
+    {{!-- criando o campo para passar o nome --}}
+    <label for="name">Nome:</label>
+    <input type="text" name="name" placeholder="Digite seu nome">
+    {{!-- criando o campo para passar a profissão --}}
+    <label for="occupation">profissão</label>
+    <input type="text" name="occupation" placeholder="Digite sua profissão">
+    {{!-- criando a checkbox para saber se o usário que receber promoções ou não --}}
+    <input type="checkbox" name="newsletter" checked>
+    <label for="newsletter">Enviar promoções?</label>
+    <input type="submit" value="Cadastrar">
+</form>

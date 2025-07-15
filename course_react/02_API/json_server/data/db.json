@@ -1,0 +1,44 @@
+{
+  "products": [
+    {
+      "id": "1",
+      "name": "Camisa",
+      "price": 59.9
+    },
+    {
+      "id": "2",
+      "name": "Calça vermelha",
+      "price": 90
+    },
+    {
+      "id": "3",
+      "name": "Boné de aba reta",
+      "price": 29.9
+    },
+    {
+      "id": "7a1d",
+      "name": "jeans",
+      "price": "49.90"
+    },
+    {
+      "id": "974e",
+      "name": "joao",
+      "price": "15.00"
+    },
+    {
+      "id": "4fc7",
+      "name": "Casadei",
+      "price": "159.22"
+    },
+    {
+      "id": "a988",
+      "name": "rosquinha",
+      "price": "5.00"
+    },
+    {
+      "id": "6e23",
+      "name": "vini jr.",
+      "price": "-1"
+    }
+  ]
+}

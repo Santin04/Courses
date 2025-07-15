@@ -1,0 +1,80 @@
+Sistema de pesquisa. Na maioria dos sites tem um sistema de pesquisa, aonde
+você pode pesquisar pelo nome do produto para achar ele mais facilmente e aqui
+abaixo vou ensinar como desenvolver um, utilizando o sequelize
+
+O seu arquivo hbs ficaria mais ou menos dessa forma:
+
+<form action='/' method='get'>
+    <input type='text' name='search' placeholder='Buscar por:'>
+    <input type='submit' value='Buscar'>
+</form>
+
+ai no controller você vai fazer as busca pelo banco de dados
+
+Para isso você teria que usar um await findAll({})
+
+O sequelize tem um metodo que facilita muito esse tipo de busca, que é o Op,
+para importa-lo basca usando o seguinte código:
+
+const { Op } = require('sequelzie');
+
+O metodo Op possui diversos jeito de deixar a busca mais especifica, aqui vou
+deixar todas os tipos que tem
+
+Op.eq = Verifica se o campo é igual de um valor específico
+where: {age: {[Op.eq]: 25}}
+
+Op.ne = Verifica se o campo é diferente de um valor específico
+where: {age: {[Op.ne]: 25}}
+
+Op.gt = Verifica se o campo é maior de um valor específico
+where: {age: {[Op.gt]: 18}}
+
+Op.gte = Verifica se o campo é maior ou igual de um valor específico
+where: {age: {[Op.gte]: 18}}
+
+Op.lt = Verifica se o campo é menor de um valor específico
+where: {age: {[Op.lt]: 18}}
+
+Op.lte = Verifica se o campo é menor ou igual de um valor específico
+where: {age: {[Op.lte]: 17}}
+
+Op.between = Verifica se o campo está entre dois valores
+where: {age: {[Op.between]: [18, 30]}}
+
+Op.notBetween = Verifica se o campo não está entre dois valores
+where: {age: {[Op.notBetween]: [18, 30]}}
+
+Op.In = Verifica se o campo tem o valor igual de algum dos valores da lista
+where: {age: {[Op.in]: [20, 30, 40]}}
+
+Op.notIn = Oposto o in
+where: {age: {[Op.notIn]: [20, 30, 40]}}
+
+Op.like = verifica se o campo corresponde com um valor de uma string
+where: {name: {[Op.like]: 'John'}}
+
+Op.notLike = Oposto do like
+where: {name: {[Op.notLike]: 'John'}}
+
+Ad string que você pode passar pode passar, você pode personalizar dessas
+formas: 'John', vai puxar somente os usuário que o nome for somente 'John',
+agora se você colocar 'John%', vai puxar os usuários que o nome começar com
+'John', você pode passar '%John' ai vai trazer somente os usuário que o nome
+terminar com 'John', e a útlima opção é '%John%' que se o usuário tiver 'John'
+em qualquer parte da string do nome, vai trazer o usuário do banco
+
+Op.Or = Combina múltiplas condições com operador lógico Or
+where: {[Op.or]: [
+    {age: {[Op.lt]: 18}},
+    {age: {[Op.gt]: 65}}
+]};
+
+Op.And = Combina múltiplas condições com operador lógico And
+where: {[Op.and]: [
+    { age: { [Op.gt]: 18 }},
+    { age: { [Op.lt]: 30 }}
+]}
+
+Essas são as formas de fazer uma busca mais específica usando o sequelize como
+facilitador das querys

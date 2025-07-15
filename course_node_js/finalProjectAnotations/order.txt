@@ -1,0 +1,12 @@
+Quandos puxamos vários itens do banco de dados, as vezes pode ser que queiramos
+ordenar esses itens por tal chave, para fazer isso, basta usar um código dessa
+forma:
+
+const pets = await Pet.find().sort(-createAt);
+
+Dessa forma você vai ordenar os itens pela ordem de criação, o - que você foi
+passado é para indicar que é do menor para o maior, você poderia colocar o
+sinal + para inverter. E depois do sinal você passa o nome do campo pelo qual
+você deseja ordenar seus produtos, se fosse um campo de texto, o + e -
+indicaria por ordem alfabetica e o alfabetica ao contrario, e se fosse por
+número, seria ordem crescente e decrescente

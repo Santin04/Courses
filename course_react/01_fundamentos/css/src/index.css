@@ -1,0 +1,9 @@
+/* Aqui é aonde vamos deixar as configurações geral do site, como editar o */
+/* estilo do *, body e também mexer em tags em geral como alterar o estilo */
+/* de todos os p, h1, etc */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}

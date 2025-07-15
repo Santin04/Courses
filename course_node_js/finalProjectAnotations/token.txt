@@ -1,0 +1,86 @@
+Token são criados qunado algum o usuário acessa o perfil, e o token é que dá a
+permissão para ele acessar as páginas
+
+como instalar o jwt na sua aplicação:
+
+npm i jsonwebtoken
+
+código abaixo de como criar um token:
+
+const jwt = require('jsonwebtoken');
+
+const createUserToken() {
+    
+    //sign é o metodo que cria o token
+    const token = jwt.sign({
+        //os dados que são passados aqui, são os dados que o token armazena
+        //dentro dele
+        name: user.name,
+        id: user._id
+    }, 'keysecret')
+    //no lugar do keysecret, você deve colocar uma grande string para
+    //dificultar que terceiros acessem seu token, pois essa é a chave para
+    //acessar o token
+
+    //para retornar para o usuário o token
+    res.status(200).json({
+        //passa para o front end que foi autenticado com sucesso
+        message: 'Você está autenticado',
+        //passa o token
+        token: token
+    })
+
+}
+
+Os momentos em que o token deve ser criado, deve ser o momento em que o usuário
+cria um login, pois automaticamente ele vai continuar dentro desse login e o
+outro momento é quando o usuário está entrando em um login já existente
+
+código para decodificar um token:
+
+static async checkUser(req, res) {
+    let currentUser;
+
+    if (req.headers.authorization) {
+        const token = getToken(req);
+        const decoded = jwt.verify(token, 'keysecret');
+
+        currentUser = await User.findById({decoded.id});
+
+        currentUser.password = undefined;
+    }
+}
+
+Código para verificar um token:
+
+OBS: chamado como middleware
+//colocar o next() como parâmetro
+const checkToken(req, res, next) {
+    //pegando o token
+    const token = req.headers.authorization;
+
+    //se não tiver token dar erro
+    if (!token) {
+        //envia o status de erro e uma mensagem de erro
+        return res.status(401).json({ message: 'Acesso negado. Nenhum token fornecido.' });
+    }
+
+    try {
+        //verificando o token se é valido
+        const verified = jwt.verify(token, 'nossosecret');
+        //passando os dados de dentro do token para o req, dentro de user e vai
+        //poder ser utilizado no código após o middleware
+        req.user = verified;
+        //o next() é um metodo que indica que o middleware acabou e pode rodar
+        //o controller
+        next();
+    } catch (err) {
+        return res.status(400).json({ message: 'Token inválido!' });
+    }
+}
+
+Uma boa definição de como vai funcionar o token em relação ao front-end,
+back-end e as APIs, é como um ping-pong, aonde o back-end vai passar o token
+para o front-end e ele vai armazenar, vai enviar o token de volta para o back
+quando for para outra rota, para assim o back fazer as validações e também
+puxar os dados do usuário corretamente

@@ -1,0 +1,126 @@
+ / Resumo de todo o módulo sobre MVC neste arquivo \
+
+Neste arquivo, vou resumir um pouco como usar MVC em um projeto com Node.js e
+Sequelize, vou mostrar abaixo um exemplo de como fica a estrutura de
+organização de pastas do projeto e também a estrutura ed código de dentro de
+cada arquivo
+
+O MVC serve para organizar seu projeto, assim facilitando a manutenção futura
+caso preciso, o código fica bem mais legível e mais fácil de ser interpretado
+por outro desenvolvedor
+
+Estrutura das pastas:
+
+│
+├── /controllers
+│   └── userController.js
+│
+├── /models
+│   └── User.js
+│
+├── /views
+│   └── useredit.hbs
+│
+├── /routes
+│   └── userRoutes.js
+│
+├── app.js
+└── package.json
+
+Esse é um exemplo da estrutura e organização de pastas e arquivos de um projeto
+aonde você adota o MVC, abaixo vai estar a explicação de para que serve cada
+pasta de arquivos e um exemplo da estrutura dos arquivos
+
+1-CONTROLLERS:
+É o repositório onde vai ficar os controllers, ele se consiste em um objeto com
+métodos dentro que realiza as query e manipula os dados que vão entrar ou sair
+do banco de dados
+=>EXEMPLO:
+
+Const User = require('../models/User');
+module.exports = {
+    editUserPage: async (req, res) => {
+        const id = req.params.id;
+
+        const user = await User.findOne({ where: { id: id } });
+
+        res.render('userEdit', { user: user });
+    },
+    allUsers: async (req, res) => {
+        const users = await User.findAll();
+
+        res.render('users', { users: users });
+    }
+}
+
+Esse é exemplo, e imaginando que esse arquivo tenha o nome de 
+userController.js, quando você chamar esse objeto em outro arquivo, seria dessa
+forma:
+userController.editUserPage
+userController.allUsers
+
+2-MODELS:
+É o repositório aonde vai ficar as tabelas do banco de dados que você criou
+usando o sequelize, você cria as tabelas e exporta para outros arquivos .js
+poderem usar a tabela para enviar e puxar dados, aqui abaixo vou colocar um
+exemplo de um arquivo User.js que ficaria dentro do models
+=>EXEMPLO:
+
+//nesse código o db é a conexão com o banco de dados
+const { DataTypes } = require('sequelize');
+const db = require('../db/conn');
+
+const User = db.define('User', {
+    name: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    occupation: {
+        type: DataTypes.STRING,
+        require: true
+    },
+    newsletter: {
+        type: DataTypes.BOOLEAN
+    }
+});
+
+module.exports = User;
+
+3-VIEWS:
+É o repositório aonde vai ficar os arquivos handlebars, que são os arquivos que
+é vai ser o front-end do site, aonde você vai salvar todas as telas do seu
+site, é recomendado também criar uma pasta layouts que é o layout que todos os
+seus arquivos handlebars vão usar, assim não precisando configurar toda vez o
+<head>, nem o cabeçalho e rodapé. Outra pasta que é comum ter dentro do views é
+uma pasta com o nome partials, que é onde você deixa textos "HTML", prontos
+para você exportar para qualquer arquivo handlebars e usar diversas vezes,
+assim não precisando escrever diversas vezes a mesma coisa
+
+4-ROUTES:
+É o repositório que cuida das rotas que o usuário passa na url, um exemplo de
+um arquivo dentro do routes seria um arquivo nomeado com userRoutes, dentro
+dele importaria o userController, assim ele ao definir a rota, realiza o método
+que deve acontecer quando o usuário acessar a rota, abaixo vai ter um código de
+exemplo, esse código vai usar nosso controller que criamos anteriormente como
+demonstração
+=>EXEMPLO:
+
+const express = require('express');
+const router = express.Router();
+const userController = require('../controllers/userController');
+
+router.get('/users/edit/:id', userController.editUserPage);
+router.get('/users', userController.allUsers);
+
+module.exports = router;
+
+
+
+Enfim, esse é o modelo de organização MVC, e no server.js para usar as rotas
+e os comandos com o banco de dados, teria que usar o código dessa forma:
+
+app.use('/', userRoutes);
+
+Com isso ao abrir o site já vai carregar todas as rotas e vão estar prontas
+para serem acessadas, independente se o usuário passar pela rota '/', basta
+colocar dessa forma que as rotas vão funcionar normalmente

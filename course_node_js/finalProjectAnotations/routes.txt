@@ -1,0 +1,22 @@
+Na pasta de routes, é onde fica os arquivos que vão organizar qual controller
+que vai ser chamado quando o usuário entrar em tal rota, tudo isso já sabemos e
+sabemos como montar, porém a informação que vamos acrescentar é os middleware,
+normalmente são usados para verificar se o usuário está autenticado para estar
+acessando a página que ele passou a rota ou não, vou dar um exemplo de como
+usar os middleware
+
+OBS: normalmente os código dos middleware ficam guardados dentro de arquivos na
+em uma pasta que normalmente o nome é "helpers", que indica que são funções que
+são usadas diversas vezes dentro do sistema
+
+
+Exemplo:
+
+router.get('/site', middleware, controller)
+
+e para passar diversos middleware você tem diversos jeitos
+
+router.get('/site', middleware01, middleware02, controller);
+router.get('/site', [middleware01, middleware02], controller);
+const middleware = [ middleware01, middleware02 ];
+router.get('/site', middleware, controller)

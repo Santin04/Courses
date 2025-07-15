@@ -1,0 +1,15 @@
+<h1>Olá sequelize</h1>
+<a href="/users/create">Cadastrar</a>
+
+<div>
+    {{#each user}}
+    <div>
+        <h1>{{this.name}}</h1>
+        <p>{{this.occupation}}</p>
+        {{!-- criando um link para o usuário acessar o user --}}
+        <a href="/users/{{this.id}}">Detalhes</a><br>
+        {{!-- criando um link para o usuário excluir o user --}}
+        <a href="/users/delete/{{this.id}}">Deletar</a>
+    </div>
+    {{/each}}
+</div>

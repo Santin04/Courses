@@ -1,0 +1,49 @@
+Usando o mongoose, quando você está criando o model, passando o nome de cada
+campo e se é required ou não e tudo mais, você pode no final passar isso:
+
+(
+    {
+        name: {
+            type: String,
+            required: true
+        }
+    },
+    {
+        timesTamps: true
+    }
+)
+
+se você incluir esse objeto que dentro dele possui o dado timesTamps: true, vai
+fazer com que todo item que for criado, tenha um campo guardando a data de
+criação e outro campo guardando a data da última modificação, ou seja sempre
+que mexer em qualquer campo, aquele campo de data da última alteração também
+vai ser alterado
+
+
+Com o mongoose em uma situação onde você tem o model de Pessoas e o model de
+Carros, em você de dentro de Carros ter um campo aonde você vai passar o id da
+pessoa que é o dono que é a forma que seria feita com o MySql, no caso do
+mongoose, você pode criar um campo e passar o type dele como object
+
+(
+    {
+        name: {
+            type: String,
+            required: true
+        },
+        dono: Object
+    }
+)
+
+
+Em alguns momentos do seu sistema, o usuário pode simplesmente passar um id em
+alguma tela de consulta, se ele editar o url, ele pode passar um id que não é
+valido, para evitar que isso ocorra, você pode usar esse seguinte metodo do
+mongoose, que permite ver se o id passado é do mesmo formato dos id que ele
+gera automaticamente
+
+const ObjectId = require('mongoose').Types.ObjectId
+if(!ObjectId.isValid(id)){
+    res.status(422).json({ message: 'ID Inválido' });
+    return;
+};

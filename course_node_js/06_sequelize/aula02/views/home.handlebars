@@ -1,0 +1,13 @@
+<h1>Olá sequelize</h1>
+<a href="/users/create">Cadastrar</a>
+
+{{!-- criando a div onde vai ter um loop e vai exibir todos so cadastros --}}
+<div>
+    {{!-- fazendo o loop --}}
+    {{#each user}}
+    <div>
+        <h1>{{this.name}}</h1>
+        <p>{{this.occupation}}</p>
+    </div>
+    {{/each}}
+</div>

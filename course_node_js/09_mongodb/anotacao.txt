@@ -1,0 +1,30 @@
+database = é onde fica as collections e dados
+collections = São como as tabelas do mysql, aonde vamos inserir dados
+documents = são os dados que passamos
+
+Você pode criar collections livremente e não possui colunas fixas para os dados
+
+BSON, é semelhante ao JSON sua estrutura:
+
+{
+    nome: "Mateus",
+    idade: 19
+}
+
+comando no terminal para iniciar o servidor:
+mongod
+
+comando no terminal para finalizar o servidor:
+Ctrl + C
+
+show dbs = esse comando quando executado no terminal, mostra todos os bancos
+
+use name_collection = cria/acessa o seu banco
+
+db.name_collection.insertOne({name: "Mateus", idade: 19}) = esse comando inseri
+um item ao banco
+
+
+OBS: metodos static e não static, usar metodos com static quando o metodo não
+utiliza as instâncias das classes, pois o static não tem acesso ao this, caso
+contrário usar o static

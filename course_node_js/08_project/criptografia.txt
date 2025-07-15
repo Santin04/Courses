@@ -1,0 +1,22 @@
+Para fazer a criptografia de sites, vamos instalar e importar a biblioteca
+bcryptjs
+
+importação:
+const bcrypt = require('bcryptjs');
+
+criando a senha:
+//recomendado colocar um nome alternativo para dificultar ser hackeado
+//o 10 é quantos caracteres vai ter
+const andorinha = bcrypt.genSaltSync(10);
+const hashedPassword = bcrypt.hashSync(password, andorinha);
+
+com essa variavel 'hashedPassword' é só você passar ela para enviar para o
+banco de dados
+
+Agora quando o usuário for logar em sua conta, ele vai passar o email e a senha
+e ai você precisa verificar se a senha está batendo com a que está no banco de
+dados, para isso você iria utilizar um código dessa forma:
+
+const passwordMartch = bcrypt.compareSync(password, user.password;)
+OBS: nesse código o primeiro argumento é a senah que veio do formulário e o
+segundo argumento e a senha que está criptografada no seu banco de dados

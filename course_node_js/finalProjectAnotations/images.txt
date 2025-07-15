@@ -1,0 +1,79 @@
+Configurando aonde vai ser armazenado a imagem, código de exemplo abaixo:
+OBS: instalar o multer antes, npm i multer
+
+const multer = require('multer');
+const path = require('path');
+
+//função que define aonde vai ser salvo a imagem e o nome em que vamos salvar ela
+const imageStore = multer.diskStorage({
+    //definindo o destino em que o arquivo vai ser salvo
+    destination: function(req, file, cb) {
+        let folder = '';
+
+        //definindo a pasta em que vai ser salvo
+        if(req.baseUrl.includes('users')) {
+            folder = 'users';
+        } else if(req.baseUrl.includes('pets')){
+            folder = 'pet';
+        }
+
+        //definindo o valor de destination
+        cb(null, `public/images/${folder}`);
+    },
+    //definindo o nome do arquivo que vamos salvar
+    filename: function(req, file, cb) {
+        //definindo o valor do filename, passando um string que é a junção da
+        //data em milissegundos + algum número aleatório de 0 a 999 + a
+        //extensão do arquivo original
+        cb(null, Date.now() + String(Math.floor(Math.random() * 1000)) + path.extname(file.originalname));
+    }
+})
+
+
+Agora a baixo vou deixar um exemplo de um código que vai manipular o upload da
+imagem:
+
+const imageUpload = multer({
+    //passando o caminho em que o arquivo vai ser salvo
+    storage: imageStore,
+    //fazendo um função que define os arquivos que vão ser aceitos
+    fileFilter(req, file, cb) {
+        //if para aceitar somente arquivos png e jpg
+        if(!file.originalname.match(/\.(png|jpg)$/)) {
+            return cb(new Error('Por favor, envie apenas jpg ou png'));
+        };
+        //passando true para o cb para dizer que pode realizar a função 
+        cb(undefined, true);
+    }
+})
+
+Esse middleware seria usado nesse seguinte exemplo abaixo:
+app.post('/site', imageUpload.singe("image"), myController);
+//o imageUpload vai salvar a imagem como configuramos, o singe() é um metodo
+//usado para processar um único arquivo por vez e o "image" de dentro é o name
+//do input, para saber da onde vai receber o arquivo de imagem  
+
+
+Já o myController que é o nosso arquivo de exemplo, em algum momento do código
+vai ter que ter isso aqui:
+
+if(req.file) {
+    user.image = req.file.filename;
+};
+
+Caso você receba disversas imagens do usuário, sua route vai ter que ser sofrer
+uma leve alteração, ficando dessa forma:
+
+app.post('/site', imageUpload.array('images'), myController);
+
+Ai nesse caso, no controller você vai ter que colocar todos em uma varial dessa
+forma: 
+const images = req.files;
+
+para passar as imagens para o banco, quando você criar o pet, terá que passar o
+campo images como um array vazio e depois que criar você pode usar um código
+assim para passar os valores para dentro do array:
+
+images.map((image) => {
+    pet.images.push(image.filename)
+})

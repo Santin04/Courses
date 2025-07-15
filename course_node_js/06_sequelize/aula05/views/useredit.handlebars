@@ -1,0 +1,62 @@
+<h1>Editando: {{user.name}}</h1>
+<form action="/users/update" method="post">
+    {{!-- passando o valor do id de forma obscura para assim podermos pegar esse dado como parametro também --}}
+    <input type="hidden" name="id" value="{{user.id}}">
+
+    <label for="name">Nome:</label>
+    <input type="text" name="name" value="{{user.name}}">
+
+    <label for="occupation">profissão</label>
+    <input type="text" name="occupation" value="{{user.occupation}}">
+
+    {{#if user.newsletter}}
+    <input type="checkbox" name="newsletter" checked>
+    {{else}}
+    <input type="checkbox" name="newsletter">
+    {{/if}}
+    <label for="newsletter">Enviar promoções?</label>
+
+    <input type="submit" value="editar">
+</form>
+{{!-- Criando formulário para o usuário passar o seu endereço --}}
+<div>
+    <h2>Endereço:</h2>
+    <form action="/adress/create" method="post">
+        {{!-- passando o id de forma oculta, para sabermos de qual user é o endereço --}}
+        <input type="hidden" name="UserId" value="{{user.id}}">
+
+        {{!-- passando o nome da rua do usuário --}}
+        <label for="street">Rua:</label>
+        <input type="text" name="street">
+
+        {{!-- passando o número do usuário --}}
+        <label for="number">Número:</label>
+        <input type="text" name="number">
+
+        {{!-- passando a cidade do usuário --}}
+        <label for="city">Cidade:</label>
+        <input type="text" name="city">
+
+        {{!-- botão para enviar o formulário --}}
+        <input type="submit" value="Incluir endereço">
+    </form>
+</div>
+
+{{!-- Criando aonde vai ser exibidos os endereços do usuário --}}
+<div>
+    <h2>Lista de endereços</h2>
+    {{!-- fazendo um loop com todas as linhas do Adress que pertence a esse usuário --}}
+    {{!-- OBS: passar .tabela com o nome igualizinho como está no banco de dados --}}
+    {{#each user.Addresses}}
+        <p>#{{this.id}} - 
+            {{this.street}} - 
+            {{this.number}} - 
+            {{this.city}} 
+            <form action="/address/delete" method="post">
+                <input type="hidden" name="UserId" value="{{this.UserId}}">
+                <input type="hidden" name="id" value="{{this.id}}">
+                <input type="submit" value="Excluir">
+            </form> 
+        </p><br>
+    {{/each}}
+</div>

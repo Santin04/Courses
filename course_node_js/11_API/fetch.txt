@@ -1,0 +1,49 @@
+O fetch API é usado para conseguirmos consumir APIs, e nesse arquivo vou
+mostrar como realizar essa operação
+
+Exemplo:
+//definindo o caminho da onde está localizado minha API
+const url('https://meusite.com/posts');
+
+async function getAllPosts() {
+    //ele vai pegar todos os dados da API do caminho que foi passado
+    const response = await fetch(url)
+
+    //usado só para ver oque foi pego da API, essa linha depois é apagada
+    console.log(response);
+
+    //depois para pegar os dados que são usados realmente você utilizara isso
+    const data = await response.json();
+
+    //usado só para ver oque foi pego da API, essa linha depois é apagada
+    console.log(data);
+}
+
+
+Exemplo de como consumir mais de uma API:
+async function getPost() {
+    const [responsePost, responseComment] = await Promise.all([
+        //passando o caminho das duas API que vão ser consumidas
+        fetch('url01'),
+        fetch('url02)
+    ]);
+    //pegando os dados de dentro das duas APIs
+    const dataPost = await responsePost.json();
+    const dataComment = await responseComment.json();
+}
+
+Exemplo de como passar um dado para API:
+//criando um função que vai receber um object que já foi transformado em json
+async function submitComment(objectForApi) {
+    const response = await fetch('url', {
+        //definindo o method para POST
+        method: 'POST',
+        //adicionando o nosso json ao body
+        body: commet,
+        //indicando o formato dos dados que estamos enviando, que bno caso é
+        //no formato json
+        headers: {
+            "content-type": "application/json",
+        },
+    });
+}
